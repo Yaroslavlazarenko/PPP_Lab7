@@ -41,15 +41,23 @@ namespace PPP_Lab7
         /// </summary>
         /// <param name="user">Пользователь, которого нужно удалить из системы рейтинга.</param>
         /// <exception cref="KeyNotFoundException">Исключение, если пользователь не найден в системе рейтинга.</exception>
+        /// <exception cref="ArgumentException">Исключение, если входной объект пользователя (user) равен null.</exception>
         public void RemoveRating(User user)
         {
-            if (_userRatings.ContainsKey(user))
+            if (user != null)
             {
-                _userRatings.Remove(user);
+                if (_userRatings.ContainsKey(user))
+                {
+                    _userRatings.Remove(user);
+                }
+                else
+                {
+                    throw new KeyNotFoundException($"Пользователь {user.FirstName} не найден в системе рейтинга.");
+                }
             }
             else
             {
-                throw new KeyNotFoundException($"Пользователь {user.FirstName} не найден в системе рейтинга.");
+                throw new ArgumentException("Входной объект пользователя (user) не должен быть null.");
             }
         }
 
@@ -59,13 +67,21 @@ namespace PPP_Lab7
         /// <param name="user">Объект класса User, для которого нужно получить рейтинг.</param>
         /// <returns>Рейтинг пользователя в виде целого числа.</returns>
         /// <exception cref="KeyNotFoundException">Исключение, если пользователь не найден в системе рейтинга.</exception>
+        /// <exception cref="ArgumentException">Исключение, если входной объект пользователя (user) равен null.</exception>
         public int GetRating(User user)
         {
-            if (_userRatings.ContainsKey(user))
+            if (user != null)
             {
-                return _userRatings[user];
+                if (_userRatings.ContainsKey(user))
+                {
+                    return _userRatings[user];
+                }
+                throw new KeyNotFoundException($"Пользователь {user.FirstName} не найден в системе рейтинга.");
             }
-            throw new KeyNotFoundException($"Пользователь {user.FirstName} не найден в системе рейтинга.");
+            else
+            {
+                throw new ArgumentException("Входной объект пользователя (user) не должен быть null.");
+            }
         }
 
         /// <summary>
@@ -74,13 +90,21 @@ namespace PPP_Lab7
         /// <param name="user">Пользователь, объект класса User.</param>
         /// <param name="newRating">Новое значение рейтинга пользователя.</param>
         /// <exception cref="KeyNotFoundException">Исключение, если пользователь не найден в системе рейтинга.</exception>
+        /// <exception cref="ArgumentException">Исключение, если входной объект пользователя (user) равен null.</exception>
         public void ModifyRating(User user, int newRating)
         {
-            if (!_userRatings.ContainsKey(user))
+            if (user != null)
             {
-                throw new KeyNotFoundException($"Пользователь {user.FirstName} не найден в системе рейтинга.");
+                if (!_userRatings.ContainsKey(user))
+                {
+                    throw new KeyNotFoundException($"Пользователь {user.FirstName} не найден в системе рейтинга.");
+                }
+                _userRatings[user] = newRating;
             }
-            _userRatings[user] = newRating;
+            else
+            {
+                throw new ArgumentException("Входной объект пользователя (user) не должен быть null.");
+            }
         }
 
         /// <summary>
