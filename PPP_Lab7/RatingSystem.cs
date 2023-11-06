@@ -78,10 +78,7 @@ namespace PPP_Lab7
                 }
                 throw new KeyNotFoundException($"Пользователь {user.FirstName} не найден в системе рейтинга.");
             }
-            else
-            {
-                throw new ArgumentException("Входной объект пользователя (user) не должен быть null.");
-            }
+            throw new ArgumentException("Входной объект пользователя (user) не должен быть null.");
         }
 
         /// <summary>
